@@ -6,7 +6,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.CocokindHomePage;
 
-public class BaseTest{
+public abstract class BaseTest{
 
     private static WebDriver driver;
     protected static CocokindHomePage homePage;
@@ -18,6 +18,7 @@ public class BaseTest{
         driver.get(LINK);
 
         homePage = new CocokindHomePage(driver);
+        homePage.close_Ad();
     }
 
     @AfterClass
