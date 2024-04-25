@@ -18,7 +18,7 @@ public class SearchResultsPage extends BasePage{
         super(driver);
     }
 
-    public String getAlertText(){
+    public String getStatusText(){
         return getDriver().findElement(statusCheck).getText();
     }
 
@@ -27,6 +27,7 @@ public class SearchResultsPage extends BasePage{
         Actions actions = new Actions(getDriver());
         actions.moveToElement(e).click().perform();
     }
+
     public String getCartItem(){
         return getDriver().findElements(productTitle).get(0).getText();
     }
