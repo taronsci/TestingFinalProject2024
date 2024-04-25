@@ -1,7 +1,6 @@
 package pages;
 
 import constants.locators.CheckoutPageConstants;
-import org.checkerframework.checker.units.qual.C;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -12,7 +11,6 @@ public class CheckoutPage extends BasePage{
     private By address = By.id(CheckoutPageConstants.ADDRESS);
     private By warning = By.id(CheckoutPageConstants.EMAILWARNINGMESSAGE);
     private By payNow = By.cssSelector(CheckoutPageConstants.PAYNOW);
-
 
     public CheckoutPage(WebDriver driver) {
         super(driver);

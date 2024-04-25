@@ -17,7 +17,12 @@ public class SearchTests extends BaseTest {
         SearchResultsPage searchResultsPage = homePage.click_search_button();
         assertEquals(AssertionMessages.CHECK_TEXT_INCORRECT, "search results", searchResultsPage.getStatusText());
     }
-
+    @Test
+    public void CocokindInvalidSearch(){
+        homePage.setSearch("button");
+        SearchResultsPage searchResultsPage = homePage.click_search_button();
+        assertEquals(AssertionMessages.SEARCH_RESULTS_NOT_FOUND,"No results found for “button”. Check the spelling or use a different word or phrase.", searchResultsPage.getErrorStatusText());
+    }
     @Test
     public void CocokindAddToCart(){
         homePage.setSearch("resurrection polypeptide cream");
@@ -30,7 +35,6 @@ public class SearchTests extends BaseTest {
         assertEquals(AssertionMessages.CORRECT_ITEM_NOT_ADDED, "resurrection polypeptide cream", searchResultsPage.getCartItem());
 
     }
-
     @Test
     public void CocokingCheckout(){
         homePage.setSearch("resurrection polypeptide cream");
@@ -47,9 +51,8 @@ public class SearchTests extends BaseTest {
 
         assertTrue(AssertionMessages.CHECK_TEXT_INCORRECT, checkoutPage.getStatus());
     }
-
     @Test
-    public void Cart(){
+    public void InvalidPayNow(){
         homePage.setSearch("resurrection polypeptide cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
         searchResultsPage.addToCart();

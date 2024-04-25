@@ -6,11 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import java.util.List;
-
 public class SearchResultsPage extends BasePage{
+
     private By statusCheck = By.className(SearchPageConstants.STATUSCHECK);
     private By products = By.cssSelector(SearchPageConstants.ADDTOCARTBUTTON1);
+    private By statusCheck2 = By.xpath("//*[@id=\"shopify-section-template--16200640397488__main\"]/div/div/div[1]/p");
 
     public By productTitle = By.className(SearchPageConstants.PRODUCTTITLE);
 
@@ -20,6 +20,9 @@ public class SearchResultsPage extends BasePage{
 
     public String getStatusText(){
         return getDriver().findElement(statusCheck).getText();
+    }
+    public String getErrorStatusText(){
+        return getDriver().findElement(statusCheck2).getText();
     }
 
     public void addToCart(){
