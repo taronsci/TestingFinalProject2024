@@ -24,6 +24,12 @@ public class SearchTests extends BaseTest {
         assertEquals(AssertionMessages.SEARCH_RESULTS_NOT_FOUND,"No results found for “button”. Check the spelling or use a different word or phrase.", searchResultsPage.getErrorStatusText());
     }
     @Test
+    public void CocokindBlankSearch(){
+        homePage.setSearch("");
+        homePage.click_cancelSearch_button();
+        assertTrue(AssertionMessages.BLANK_SEARCH, homePage.isCancelSearchEnabled());
+    }
+    @Test
     public void CocokindAddToCart(){
         homePage.setSearch("resurrection polypeptide cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();

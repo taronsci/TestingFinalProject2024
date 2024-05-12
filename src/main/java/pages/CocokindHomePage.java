@@ -12,6 +12,7 @@ public class CocokindHomePage extends BasePage{
     private By shadowHost = By.id(CocokindHomePageConstants.SHADOWHOST);
     private By shadowRoot = By.cssSelector(CocokindHomePageConstants.SHADOWROOT);
     private By SearchButton = By.xpath(CocokindHomePageConstants.SEARCHBUTTON2);
+    private By cancelSearchButton = By.className(CocokindHomePageConstants.CANCELSEARCHBUTTON);
 
     public CocokindHomePage(WebDriver driver){
         super(driver);
@@ -34,5 +35,13 @@ public class CocokindHomePage extends BasePage{
     public SearchResultsPage click_search_button(){
         getDriver().findElement(SearchButton).click();
         return new SearchResultsPage(getDriver());
+    }
+
+    public void click_cancelSearch_button(){
+        getDriver().findElement(cancelSearchButton).click();
+    }
+
+    public boolean isCancelSearchEnabled(){
+        return getDriver().findElement(cancelSearchButton).isEnabled();
     }
 }
