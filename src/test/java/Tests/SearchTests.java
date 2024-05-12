@@ -19,9 +19,9 @@ public class SearchTests extends BaseTest {
     }
     @Test
     public void CocokindInvalidSearch(){
-        homePage.setSearch("button");
+        homePage.setSearch("$.b1u*t`t~o'n+");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
-        assertEquals(AssertionMessages.SEARCH_RESULTS_NOT_FOUND,"No results found for “button”. Check the spelling or use a different word or phrase.", searchResultsPage.getErrorStatusText());
+        assertEquals(AssertionMessages.SEARCH_RESULTS_NOT_FOUND,"No results found for “$.b1u*t`t~o'n+”. Check the spelling or use a different word or phrase.", searchResultsPage.getErrorStatusText());
     }
     @Test
     public void CocokindBlankSearch(){
@@ -30,13 +30,25 @@ public class SearchTests extends BaseTest {
         assertTrue(AssertionMessages.BLANK_SEARCH, homePage.isCancelSearchEnabled());
     }
     @Test
+    public void CocokindSortByPriceLtH() throws InterruptedException {
+        homePage.setSearch("cream");
+        SearchResultsPage searchResultsPage = homePage.click_search_button();
+        searchResultsPage.select_lowtohigh_option();
+
+        double[] pr = searchResultsPage.getPrices();
+//        for(double i:pr)
+//            System.out.print(i+" ");
+//        assertTrue(AssertionMessages.BLANK_SEARCH, homePage.isCancelSearchEnabled());
+    }
+
+    @Test
     public void CocokindAddToCart(){
         homePage.setSearch("resurrection polypeptide cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
         searchResultsPage.addToCart();
 
         WebDriverWait wait = new WebDriverWait(searchResultsPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(searchResultsPage.productTitle));
+        wait.until(searchResultsPage.isTitleVisible());
 
         assertEquals(AssertionMessages.CORRECT_ITEM_NOT_ADDED, "resurrection polypeptide cream", searchResultsPage.getCartItem());
 
@@ -48,7 +60,7 @@ public class SearchTests extends BaseTest {
         searchResultsPage.addToCart();
 
         WebDriverWait wait = new WebDriverWait(searchResultsPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(searchResultsPage.productTitle));
+        wait.until(searchResultsPage.isTitleVisible());
 
         CheckoutPage checkoutPage = searchResultsPage.click_checkout_button();
 
@@ -64,7 +76,7 @@ public class SearchTests extends BaseTest {
         searchResultsPage.addToCart();
 
         WebDriverWait wait = new WebDriverWait(searchResultsPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(searchResultsPage.productTitle));
+        wait.until(searchResultsPage.isTitleVisible());
 
         CheckoutPage checkoutPage = searchResultsPage.click_checkout_button();
 
