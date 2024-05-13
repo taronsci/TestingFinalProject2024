@@ -34,6 +34,7 @@ public class SearchTests extends BaseTest {
         homePage.setSearch("cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
         searchResultsPage.switchSortToLtH();
+        searchResultsPage.click_header();
 
         double[] pr = searchResultsPage.getPrices();
 //        for(double i:pr) {

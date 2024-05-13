@@ -81,6 +81,9 @@ public class SearchResultsPage extends BasePage{
 //        ((JavascriptExecutor) getDriver()).executeScript(script);
     }
 
+    public void click_header(){
+        getDriver().findElement(By.cssSelector("[class^=\"template-search__header\"] > h1")).click();
+    }
     public void switchSortToLtH(){
         click_sortBy_button();
         select_lowtohigh_option();
