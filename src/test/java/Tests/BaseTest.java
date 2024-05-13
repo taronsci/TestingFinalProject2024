@@ -8,9 +8,10 @@ import pages.CocokindHomePage;
 
 public abstract class BaseTest{
 
-    private static WebDriver driver;
+    protected static WebDriver driver;
     protected static CocokindHomePage homePage;
     public static final String LINK = "https://www.cocokind.com";
+    public static final String LINKLtH = "https://www.cocokind.com/search?q=cream&options%5Bprefix%5D=last&sort_by=price-ascending";
 
     @BeforeClass
     public static void setUp(){

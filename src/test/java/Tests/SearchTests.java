@@ -1,13 +1,9 @@
 package Tests;
 
 import org.junit.Test;
-import pages.CheckoutPage;
 import pages.SearchResultsPage;
 import static org.junit.Assert.*;
 import constants.AssertionMessages;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import java.time.Duration;
 
 public class SearchTests extends BaseTest {
 
@@ -30,19 +26,11 @@ public class SearchTests extends BaseTest {
         assertTrue(AssertionMessages.BLANK_SEARCH, homePage.isCancelSearchEnabled());
     }
     @Test
-    public void CocokindSortByPriceLtH(){
-        homePage.setSearch("cream");
-        SearchResultsPage searchResultsPage = homePage.click_search_button();
-        searchResultsPage.switchSortToLtH();
-        searchResultsPage.click_header();
+    public void CocokindSortByPriceLtH() {
+        driver.get(LINKLtH);
+        SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
 
         double[] pr = searchResultsPage.getPrices();
-//        for(double i:pr) {
-//            if(i != 0.0)
-//                System.out.print(i + " ");
-//        }
-
-        //will fail until switchSortToLtH() method is fixed
         assertTrue(AssertionMessages.PRICESNOTSORTED, SearchResultsPage.isSorted(pr));
     }
 
