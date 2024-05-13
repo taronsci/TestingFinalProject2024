@@ -7,11 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 import java.util.List;
 
 public class SearchResultsPage extends BasePage{
 
-    private By statusCheck = By.className(SearchPageConstants.STATUSCHECK);
+    protected By statusCheck = By.className(SearchPageConstants.STATUSCHECK);
     private By products = By.cssSelector(SearchPageConstants.ADDTOCARTBUTTON1);
     private By soldOutProd = By.cssSelector(SearchPageConstants.ADDTOCARTBUTTON2);
     private By statusCheck2 = By.xpath(SearchPageConstants.STATUSCHECK2);
@@ -38,6 +41,9 @@ public class SearchResultsPage extends BasePage{
         WebElement e = getDriver().findElement(products);
         Actions actions = new Actions(getDriver());
         actions.moveToElement(e).click().perform();
+
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(isTitleVisible());
     }
     public void addToCartSO(){
         WebElement e = getDriver().findElement(soldOutProd);

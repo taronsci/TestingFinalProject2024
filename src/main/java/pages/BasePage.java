@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 public abstract class BasePage {
 
     private WebDriver driver;
-    private By checkoutButton = By.cssSelector(SearchPageConstants.CHECKOUT);
+    protected By checkoutButton = By.cssSelector(SearchPageConstants.CHECKOUT);
 
     public BasePage(WebDriver driver){
         this.driver = driver;
@@ -21,4 +21,5 @@ public abstract class BasePage {
         getDriver().findElement(checkoutButton).click();
         return new CheckoutPage(getDriver());
     }
+
 }

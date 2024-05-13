@@ -3,9 +3,13 @@ package pages;
 import constants.locators.CheckoutPageConstants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class CheckoutPage extends BasePage{
-    public By statusCheck = By.id(CheckoutPageConstants.STATUSCHECK);
+    private By statusCheck = By.id(CheckoutPageConstants.STATUSCHECK);
     private By firstname = By.id(CheckoutPageConstants.FIRSTNAME);
     private By lastname = By.id(CheckoutPageConstants.LASTNAME);
     private By address = By.id(CheckoutPageConstants.ADDRESS);
@@ -33,5 +37,8 @@ public class CheckoutPage extends BasePage{
     public void click_PayNow_button(){
         getDriver().findElement(payNow).click();
     }
-
+    public void waits() {
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(statusCheck));
+    }
 }
