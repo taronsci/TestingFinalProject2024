@@ -11,6 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.ServerSocket;
+import java.nio.channels.ServerSocketChannel;
 import java.time.Duration;
 import java.util.List;
 
@@ -18,12 +20,14 @@ public class SearchResultsPage extends BasePage{
 
     private By statusCheck = By.className(SearchPageConstants.STATUSCHECK);
     private By products = By.cssSelector(SearchPageConstants.ADDTOCARTBUTTON1);
+    private By soldOutProd = By.cssSelector(SearchPageConstants.ADDTOCARTBUTTON2);
     private By statusCheck2 = By.xpath(SearchPageConstants.STATUSCHECK2);
     private By productTitle = By.className(SearchPageConstants.PRODUCTTITLE);
     private By sortButton = By.id(SearchPageConstants.SORTBY);
     private By lowToHighButton = By.cssSelector(SearchPageConstants.LOWTOHIGH);//this one
     private By priceTexts = By.className(SearchPageConstants.PRICETEXTS);
     private By prodCount = By.id(SearchPageConstants.PRODUCTCOUNT);
+    private By yourCart = By.cssSelector(SearchPageConstants.YOURCART);
 
     public SearchResultsPage(WebDriver driver){
         super(driver);
@@ -41,6 +45,12 @@ public class SearchResultsPage extends BasePage{
         Actions actions = new Actions(getDriver());
         actions.moveToElement(e).click().perform();
     }
+    public void addToCartSO(){
+        WebElement e = getDriver().findElement(soldOutProd);
+        Actions actions = new Actions(getDriver());
+        actions.moveToElement(e).click().perform();
+    }
+
     public ExpectedCondition<WebElement> isTitleVisible(){
         return ExpectedConditions.visibilityOfElementLocated(productTitle);
     }
@@ -51,9 +61,7 @@ public class SearchResultsPage extends BasePage{
         getDriver().findElement(sortButton).click();
     }
 
-    public void select_lowtohigh_option() throws InterruptedException {
-        click_sortBy_button();
-        Thread.sleep(3000);
+    public void select_lowtohigh_option(){
         WebElement dropdownElement = getDriver().findElement(lowToHighButton);
 //        Select select = new Select(dropdownElement);
 //        select.selectByIndex(1);
@@ -72,10 +80,12 @@ public class SearchResultsPage extends BasePage{
 //        String script = "document.querySelector(\"#SortBy > option:nth-child(2)\").click();";
 //        ((JavascriptExecutor) getDriver()).executeScript(script);
     }
+
     public void switchSortToLtH(){
         click_sortBy_button();
-//        select_lowtohigh_option();
+        select_lowtohigh_option();
     }
+
     public int getNumOfResults(){
         String e1 = getDriver().findElement(prodCount).getText();
         return Integer.parseInt(e1.substring(0, e1.length()-8));
@@ -85,11 +95,44 @@ public class SearchResultsPage extends BasePage{
         double[] prices = new double[getNumOfResults()];
 
         for(int i = 0;i < e.size();i++){
-            prices[i] = Double.parseDouble(e.get(i).getText().substring(1));
-            System.out.println(e.get(i).getText());
+            String s = e.get(i).getText();
+            if(s.length() != 0){
+                if(s.charAt(1) == '0')
+                    continue;
+
+                if (s.contains(" "))
+                    prices[i] = Double.parseDouble(e.get(i).getText().substring(1, e.get(i).getText().indexOf(" ")));
+                else
+                    prices[i] = Double.parseDouble(e.get(i).getText().substring(1));
+            }
         }
-
-
         return prices;
     }
+    public static boolean isSorted(double[] arr){
+        int left = 0, n = arr.length, right = n - 1;
+        while (left < right) {
+            if (arr[left] > arr[right]) {
+                return false;
+            }
+            else {
+                if (left != 0 && right != n - 1
+                        && (arr[left] < arr[left - 1]
+                        || arr[right] > arr[right + 1])) {
+                    return false;
+                }
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+    public boolean isCartPresent() {
+        try {
+            getDriver().findElement(yourCart);
+            return true;
+        } catch (org.openqa.selenium.NoSuchElementException e) {
+            return false;
+        }
+    }
+
 }

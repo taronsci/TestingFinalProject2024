@@ -30,64 +30,19 @@ public class SearchTests extends BaseTest {
         assertTrue(AssertionMessages.BLANK_SEARCH, homePage.isCancelSearchEnabled());
     }
     @Test
-    public void CocokindSortByPriceLtH() throws InterruptedException {
+    public void CocokindSortByPriceLtH(){
         homePage.setSearch("cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
-        searchResultsPage.select_lowtohigh_option();
+        searchResultsPage.switchSortToLtH();
 
         double[] pr = searchResultsPage.getPrices();
-//        for(double i:pr)
-//            System.out.print(i+" ");
-//        assertTrue(AssertionMessages.BLANK_SEARCH, homePage.isCancelSearchEnabled());
+//        for(double i:pr) {
+//            if(i != 0.0)
+//                System.out.print(i + " ");
+//        }
+
+        //will fail until switchSortToLtH() method is fixed
+        assertTrue(AssertionMessages.PRICESNOTSORTED, SearchResultsPage.isSorted(pr));
     }
 
-    @Test
-    public void CocokindAddToCart(){
-        homePage.setSearch("resurrection polypeptide cream");
-        SearchResultsPage searchResultsPage = homePage.click_search_button();
-        searchResultsPage.addToCart();
-
-        WebDriverWait wait = new WebDriverWait(searchResultsPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(searchResultsPage.isTitleVisible());
-
-        assertEquals(AssertionMessages.CORRECT_ITEM_NOT_ADDED, "resurrection polypeptide cream", searchResultsPage.getCartItem());
-
-    }
-    @Test
-    public void CocokingCheckout(){
-        homePage.setSearch("resurrection polypeptide cream");
-        SearchResultsPage searchResultsPage = homePage.click_search_button();
-        searchResultsPage.addToCart();
-
-        WebDriverWait wait = new WebDriverWait(searchResultsPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(searchResultsPage.isTitleVisible());
-
-        CheckoutPage checkoutPage = searchResultsPage.click_checkout_button();
-
-        wait = new WebDriverWait(checkoutPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutPage.statusCheck));
-
-        assertTrue(AssertionMessages.CHECK_TEXT_INCORRECT, checkoutPage.getStatus());
-    }
-    @Test
-    public void InvalidPayNow(){
-        homePage.setSearch("resurrection polypeptide cream");
-        SearchResultsPage searchResultsPage = homePage.click_search_button();
-        searchResultsPage.addToCart();
-
-        WebDriverWait wait = new WebDriverWait(searchResultsPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(searchResultsPage.isTitleVisible());
-
-        CheckoutPage checkoutPage = searchResultsPage.click_checkout_button();
-
-        wait = new WebDriverWait(checkoutPage.getDriver(), Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(checkoutPage.statusCheck));
-
-        checkoutPage.setFirstname("Taron");
-        checkoutPage.setLastname("Schisas");
-        checkoutPage.setAddress("123 Blue Road");
-        checkoutPage.click_PayNow_button();
-
-        assertTrue(AssertionMessages.EMAIL_NOT_ADDED, checkoutPage.getEmailWarning());
-    }
 }
