@@ -8,4 +8,5 @@ public class AssertionMessages {
     public static final String SEARCH_RESULTS_NOT_FOUND = "Search results not found";
     public static final String BLANK_SEARCH = "Cannot search for nothing can you?";
     public static final String PRICESNOTSORTED = "Prices have not been sorted from low to high";
+    public static final String COUNTNOTCHANGEDCORRECTLY = "The count for items in the cart has not been changed correctly";
 }

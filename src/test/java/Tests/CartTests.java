@@ -3,6 +3,8 @@ package Tests;
 import constants.AssertionMessages;
 import org.junit.Test;
 import pages.SearchResultsPage;
+
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -24,12 +26,21 @@ public class CartTests extends BaseTest{
         assertFalse(AssertionMessages.CORRECT_ITEM_NOT_ADDED, searchResultsPage.isCartPresent());
     }
     @Test
-    public void CocokindPlusOneInCart(){
+    public void CocokindPlusOneInCart() {
         homePage.setSearch("resurrection polypeptide cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
         searchResultsPage.addToCart();
+        searchResultsPage.click_plus();
 
+        assertEquals(AssertionMessages.COUNTNOTCHANGEDCORRECTLY, "2", searchResultsPage.getAmount());
+    }
+    @Test
+    public void CocokindMinusOneInCart() {
+        homePage.setSearch("resurrection polypeptide cream");
+        SearchResultsPage searchResultsPage = homePage.click_search_button();
+        searchResultsPage.addToCart();
+        searchResultsPage.click_minus();
 
-        //assertEquals(AssertionMessages.CORRECT_ITEM_NOT_ADDED, "resurrection polypeptide cream", searchResultsPage.getCartItem());
+        assertEquals(AssertionMessages.COUNTNOTCHANGEDCORRECTLY, "0", searchResultsPage.getCartCount());
     }
 }

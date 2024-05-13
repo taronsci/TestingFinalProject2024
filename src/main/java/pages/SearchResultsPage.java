@@ -14,29 +14,35 @@ import java.util.List;
 
 public class SearchResultsPage extends BasePage{
 
-    protected By statusCheck = By.className(SearchPageConstants.STATUSCHECK);
+    private By statusCheck = By.className(SearchPageConstants.STATUSCHECK);
     private By products = By.cssSelector(SearchPageConstants.ADDTOCARTBUTTON1);
     private By soldOutProd = By.cssSelector(SearchPageConstants.ADDTOCARTBUTTON2);
     private By statusCheck2 = By.xpath(SearchPageConstants.STATUSCHECK2);
     private By productTitle = By.className(SearchPageConstants.PRODUCTTITLE);
     private By sortButton = By.id(SearchPageConstants.SORTBY);
-    private By lowToHighButton = By.cssSelector(SearchPageConstants.LOWTOHIGH);//this one
+    private By lowToHighButton = By.cssSelector(SearchPageConstants.LOWTOHIGH);
     private By priceTexts = By.className(SearchPageConstants.PRICETEXTS);
     private By prodCount = By.id(SearchPageConstants.PRODUCTCOUNT);
     private By yourCart = By.cssSelector(SearchPageConstants.YOURCART);
+    private By plus = By.cssSelector(SearchPageConstants.CARTCOUNTPLUS);
+    private By minus = By.cssSelector(SearchPageConstants.CARTCOUNTMINUS);
+    private By amount = By.className(SearchPageConstants.AMOUNT);
+    private By cartCount = By.className(SearchPageConstants.ITEMSINCART);
+
     private int resultPerPage = 24;
 
     public SearchResultsPage(WebDriver driver){
         super(driver);
     }
-
     public String getStatusText(){
         return getDriver().findElement(statusCheck).getText();
     }
     public String getErrorStatusText(){
         return getDriver().findElement(statusCheck2).getText();
     }
-
+    public void setResultPerPage(int resultPerPage){
+        this.resultPerPage = resultPerPage;
+    }
     public void addToCart(){
         WebElement e = getDriver().findElement(products);
         Actions actions = new Actions(getDriver());
@@ -50,27 +56,11 @@ public class SearchResultsPage extends BasePage{
         Actions actions = new Actions(getDriver());
         actions.moveToElement(e).click().perform();
     }
-
     public ExpectedCondition<WebElement> isTitleVisible(){
         return ExpectedConditions.visibilityOfElementLocated(productTitle);
     }
     public String getCartItem(){
         return getDriver().findElements(productTitle).get(0).getText();
-    }
-    public void click_sortBy_button(){
-        getDriver().findElement(sortButton).click();
-    }
-    public void select_lowtohigh_option() {
-        WebElement dropdownElement = getDriver().findElement(lowToHighButton);
-        dropdownElement.click();
-    }
-    public void switchSortToLtH(){
-        click_sortBy_button();
-        select_lowtohigh_option();
-    }
-    public int getNumOfResults(){
-        String e1 = getDriver().findElement(prodCount).getText();
-        return Integer.parseInt(e1.substring(0, e1.length()-8));
     }
     public double[] getPrices(){
         List<WebElement> e =  getDriver().findElements(priceTexts);
@@ -114,5 +104,45 @@ public class SearchResultsPage extends BasePage{
             return false;
         }
     }
+    public void click_plus(){
+        getDriver().findElement(plus).click();
 
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until((ExpectedCondition<Boolean>) driver -> {
+            WebElement button = getDriver().findElement(amount);
+            String enabled = button.getAttribute("value");
+            return !enabled.equals("1");
+        });
+    }
+    public void click_minus(){
+        getDriver().findElement(minus).click();
+
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until((ExpectedCondition<Boolean>) driver -> {
+            String enabled = getCartCount();
+            return !enabled.equals("1");
+        });
+    }
+    public String getCartCount() {
+        WebElement e = getDriver().findElement(cartCount);
+        return e.getText().substring(2, e.getText().indexOf(" i"));
+    }
+    public String getAmount(){
+        return getDriver().findElement(amount).getAttribute("value");
+    }
+    public void click_sortBy_button(){
+        getDriver().findElement(sortButton).click();
+    }
+    public void select_lowtohigh_option() {
+        WebElement dropdownElement = getDriver().findElement(lowToHighButton);
+        dropdownElement.click();
+    }
+    public void switchSortToLtH(){
+        click_sortBy_button();
+        select_lowtohigh_option();
+    }
+    public int getNumOfResults(){
+        String e1 = getDriver().findElement(prodCount).getText();
+        return Integer.parseInt(e1.substring(0, e1.length()-8));
+    }
 }

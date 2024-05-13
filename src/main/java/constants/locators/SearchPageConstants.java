@@ -15,4 +15,6 @@ public class SearchPageConstants {
     public static final String YOURCART = "body > div.cart-sidebar.show > div > div.cart-sidebar__header.flex-v-center.justify-content-between > h4";
     public static final String CARTCOUNTPLUS = "body > div.cart-sidebar.show > div > div.cart-sidebar__body > div.cart-sidebar-content > div.cart-sidebar-content-top > div.cart-items-wrapper > div > div.cart-item.position-relative > div.cart-item__meta > div.input-group > button:nth-child(3)";
     public static final String CARTCOUNTMINUS = "body > div.cart-sidebar.show > div > div.cart-sidebar__body > div.cart-sidebar-content > div.cart-sidebar-content-top > div.cart-items-wrapper > div > div.cart-item.position-relative > div.cart-item__meta > div.input-group > button:nth-child(1)";
+    public static final String AMOUNT = "input-number";
+    public static final String ITEMSINCART = "cart-count";
 }
