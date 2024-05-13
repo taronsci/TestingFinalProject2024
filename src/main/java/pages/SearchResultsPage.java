@@ -2,13 +2,13 @@ package pages;
 
 import constants.locators.SearchPageConstants;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class SearchResultsPage extends BasePage{
     private By minus = By.cssSelector(SearchPageConstants.CARTCOUNTMINUS);
     private By amount = By.className(SearchPageConstants.AMOUNT);
     private By cartCount = By.className(SearchPageConstants.ITEMSINCART);
-
+    private By dialog = By.className(SearchPageConstants.DIALOG);
     private int resultPerPage = 24;
 
     public SearchResultsPage(WebDriver driver){
@@ -123,12 +123,28 @@ public class SearchResultsPage extends BasePage{
             return !enabled.equals("1");
         });
     }
+    public void setItemCount(String count){
+        WebElement e = getDriver().findElement(amount);
+//        e.sendKeys(Keys.BACK_SPACE);
+        e.sendKeys(count);
+        click_plus();
+    }
     public String getCartCount() {
         WebElement e = getDriver().findElement(cartCount);
         return e.getText().substring(2, e.getText().indexOf(" i"));
     }
     public String getAmount(){
         return getDriver().findElement(amount).getAttribute("value");
+    }
+    public boolean isDialogDisplayed(){
+        return getDriver().findElement(dialog).isDisplayed();
+    }
+    public ExpectedCondition<WebElement> isDialogVisible(){
+        return ExpectedConditions.visibilityOfElementLocated(dialog);
+    }
+    public void waits(){
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(10));
+        wait.until(isDialogVisible());
     }
     public void click_sortBy_button(){
         getDriver().findElement(sortButton).click();

@@ -22,9 +22,8 @@ public abstract class BaseTest{
         homePage.close_Ad();
     }
 
-//    @AfterClass
-//    public static void tearDown(){
-//        driver.quit();
-//    }
-
+    @AfterClass
+    public static void tearDown(){
+        driver.quit();
+    }
 }

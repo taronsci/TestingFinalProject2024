@@ -8,7 +8,7 @@ import static org.junit.Assert.assertTrue;
 
 public class CheckoutTests extends BaseTest{
     @Test
-    public void CocokingCheckout(){
+    public void CocokindCheckout(){
         homePage.setSearch("resurrection polypeptide cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
         searchResultsPage.addToCart();
@@ -19,7 +19,7 @@ public class CheckoutTests extends BaseTest{
         assertTrue(AssertionMessages.CHECK_TEXT_INCORRECT, checkoutPage.getStatus());
     }
     @Test
-    public void InvalidPayNow(){
+    public void CocokindInvalidPayNow(){
         homePage.setSearch("resurrection polypeptide cream");
         SearchResultsPage searchResultsPage = homePage.click_search_button();
         searchResultsPage.addToCart();
