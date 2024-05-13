@@ -58,20 +58,19 @@ public class SearchResultsPage extends BasePage{
 //        Select select = new Select(dropdownElement);
 //        select.selectByIndex(1);
 
-        String script = "var elementToHover = document.querySelector('#SortBy > option:nth-child(2)');"
-                + "var event = new MouseEvent('mouseover', {"
-                + "    'view': window,"
-                + "    'bubbles': true,"
-                + "    'cancelable': true"
-                + "});"
-                + "elementToHover.dispatchEvent(event);";
+//        String script = "var elementToHover = document.querySelector('#SortBy > option:nth-child(2)');"
+//                + "var event = new MouseEvent('mouseover', {"
+//                + "    'view': window,"
+//                + "    'bubbles': true,"
+//                + "    'cancelable': true"
+//                + "});"
+//                + "elementToHover.dispatchEvent(event);";
+//
+//        ((JavascriptExecutor) getDriver()).executeScript(script);
 
-        ((JavascriptExecutor) getDriver()).executeScript(script);
-        Thread.sleep(3000);
         dropdownElement.click();
 //        String script = "document.querySelector(\"#SortBy > option:nth-child(2)\").click();";
 //        ((JavascriptExecutor) getDriver()).executeScript(script);
-
     }
     public void switchSortToLtH(){
         click_sortBy_button();
