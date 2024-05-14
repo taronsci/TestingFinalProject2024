@@ -26,4 +26,8 @@ public abstract class BaseTest{
     public static void tearDown(){
         driver.quit();
     }
+
+    public WebDriver getDriver(){
+        return driver;
+    }
 }
